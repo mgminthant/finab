@@ -7,6 +7,7 @@ export default function TransactionPage({
 }: {
   transactions: Transaction[];
 }) {
+  
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
       <h2 className="text-2xl font-semibold mb-4">Transaction List</h2>
