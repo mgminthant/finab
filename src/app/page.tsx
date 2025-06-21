@@ -4,7 +4,7 @@ import TransactionInput from "@/components/TransactionInput";
 import { Transaction } from "@/types/transactions";
 
 export default async function HomePage() {
-  const transactions:Transaction[] = await getTransactions();
+  const transactions: Transaction[] = await getTransactions();
 
   return (
     <div className="min-h-screen bg-gray-100 sm:p-8 p-4">

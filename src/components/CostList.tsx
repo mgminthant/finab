@@ -1,3 +1,4 @@
+"use client";
 import { deleteTransaction } from "@/lib/transactions";
 import { Transaction } from "@/types/transactions";
 import { formatDate } from "@/utils/date";
@@ -7,7 +8,6 @@ export default function TransactionPage({
 }: {
   transactions: Transaction[];
 }) {
-  
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
       <h2 className="text-2xl font-semibold mb-4">Transaction List</h2>
@@ -25,9 +25,14 @@ export default function TransactionPage({
                 {cost.price} ks
               </p>
               <form
-                action={async () => {
-                  "use server";
-                  await deleteTransaction(cost.id);
+                onSubmit={async () => {
+                  deleteTransaction(cost.id)
+                    .then(() => {
+                      alert("Transaction Deleted!");
+                    })
+                    .catch(() => {
+                      alert("Something went wrong");
+                    });
                 }}
               >
                 <button
