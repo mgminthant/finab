@@ -1,15 +1,29 @@
 "use client";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { addTransaction } from "@/lib/transactions";
+import { createTransactionHandler } from "@/lib/transactions";
 
-const TransactionInput = () => {
+function TransactionInput() {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
+  const handleCreateTransaction = (event: any) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = createTransactionHandler(formData);
+    data.then((data) => {
+      setOpen(false);
+      router.refresh();
+    });
+  };
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <button onClick={() => setOpen(true)} className="mb-5 inline-flex h-[35px] items-center justify-center rounded bg-green-500 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-green-500 focus-visible:outline-2 focus-visible:outline-violet6 select-none">
+        <button
+          onClick={() => setOpen(true)}
+          className="mb-5 inline-flex h-[35px] items-center justify-center rounded bg-slate-800 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-slate-900 focus-visible:outline-2 focus-visible:outline-violet6 select-none"
+        >
           Add Transaction
         </button>
       </Dialog.Trigger>
@@ -20,68 +34,59 @@ const TransactionInput = () => {
             Save Transaction
           </Dialog.Title>
           <Dialog.Description className="mb-5 mt-2.5 text-[15px] leading-normal text-mauve11">
-            Add a new transaction to your account. Click save when you&apos;re done.
+            Add a new transaction to your account. Click save when you&apos;re
+            done.
           </Dialog.Description>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-             addTransaction(new FormData(e.currentTarget)).then(()=>{
-               setOpen(false);
-               alert("Transaction Added!");
-             }).catch(()=>{
-                alert('Something went wrong');
-             })
-            }}
-          >
+          <form onSubmit={handleCreateTransaction}>
             <fieldset className="mb-[15px] flex items-center gap-5">
               <label
-                className="w-[90px] text-right text-[15px] text-violet11"
+                className="w-[90px] text-right text-[15px] text-black"
                 htmlFor="Transaction Title"
               >
                 Title
               </label>
               <input
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 outline-none focus:shadow-[0_0_0_2px] focus:shadow-violet8"
+                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
                 id="transaction_title"
                 name="title"
               />
             </fieldset>
             <fieldset className="mb-[15px] flex items-center gap-5">
               <label
-                className="w-[90px] text-right text-[15px] text-violet11"
+                className="w-[90px] text-right text-[15px] text-black"
                 htmlFor="Price"
               >
                 Price
               </label>
               <input
                 type="number"
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 outline-none focus:shadow-[0_0_0_2px] focus:shadow-violet8"
+                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
                 id="price"
                 name="price"
               />
             </fieldset>
             <fieldset className="mb-[15px] flex items-center gap-5">
               <label
-                className="w-[90px] text-right text-[15px] text-violet11"
+                className="w-[90px] text-right text-[15px] text-black"
                 htmlFor="Description"
               >
                 Description
               </label>
               <input
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 outline-none focus:shadow-[0_0_0_2px] focus:shadow-violet8"
+                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
                 id="description"
                 name="description"
               />
             </fieldset>
             <fieldset className="mb-[15px] flex items-center gap-5">
               <label
-                className="w-[90px] text-right text-[15px] text-violet11"
+                className="w-[90px] text-right text-[15px] text-black"
                 htmlFor="Category"
               >
                 Category
               </label>
               <input
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 outline-none focus:shadow-[0_0_0_2px] focus:shadow-violet8"
+                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
                 id="category"
                 name="category"
               />
@@ -89,14 +94,14 @@ const TransactionInput = () => {
             <div className="mt-[25px] flex justify-end">
               <button
                 type="submit"
-                className="inline-flex h-[35px] items-center justify-center rounded bg-green-500 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-green5 focus-visible:outline-2 focus-visible:outline-green6 select-none"
+                className="inline-flex h-[35px] items-center justify-center rounded bg-green-500 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-green6 select-none"
               >
                 Add
               </button>
             </div>
             <Dialog.Close asChild>
               <button
-                className="absolute right-2.5 top-2.5 inline-flex size-[25px] appearance-none items-center justify-center rounded-full text-violet11 bg-gray3 hover:bg-violet4 focus:shadow-[0_0_0_2px] focus:shadow-violet7 focus:outline-none"
+                className="absolute right-2.5 top-2.5 inline-flex size-[25px] appearance-none items-center justify-center rounded-full text-black bg-gray3 hover:bg-violet4 focus:shadow-[0_0_0_2px] focus:shadow-slate-950 focus:outline-none"
                 aria-label="Close"
               >
                 <Cross2Icon />
@@ -107,6 +112,6 @@ const TransactionInput = () => {
       </Dialog.Portal>
     </Dialog.Root>
   );
-};
+}
 
 export default TransactionInput;
