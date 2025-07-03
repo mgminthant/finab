@@ -14,7 +14,7 @@ export default function BudgetInput() {
   const handleCreateBudget = (event: React.FormEvent<HTMLFormElement> ) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    createBudgetHandler(formData).then((data) => console.log(data));
+    createBudgetHandler(formData);
     setOpen(false);
     setOpenToast(true);
     router.refresh();

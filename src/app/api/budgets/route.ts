@@ -7,7 +7,7 @@ export async function GET() {
       'SELECT total_budget FROM budgets LIMIT 1'
     );
     if (budgetResult.rowCount === 0) {
-      return NextResponse.json({ error: 'No budget found' }, { status: 404 });
+      return NextResponse.json({ error: 'No budget found' }, { status: 401 });
     }
     const totalBudget = Number(budgetResult.rows[0].total_budget);
 

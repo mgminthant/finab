@@ -1,6 +1,6 @@
 "use server";
 export async function createTransactionHandler(formData: FormData) {
-  const res = await fetch(`${process.env.BASE_API}/transactions`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/transactions`, {
     method: "POST",
     body: formData,
   });
@@ -9,7 +9,7 @@ export async function createTransactionHandler(formData: FormData) {
 }
 
 export async function deleteTransactionHandler(id: number) {
-  const res = await fetch(`${process.env.BASE_API}/transactions?id=${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/transactions?id=${id}`, {
     method: "DELETE",
   });
   const data = res.json();

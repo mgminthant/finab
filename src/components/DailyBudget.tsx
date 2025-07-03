@@ -1,7 +1,7 @@
 import React from "react";
 
 export default async function DailyBudget() {
-  const res = await fetch(`${process.env.BASE_API}/dailyBudgets`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/dailyBudgets`);
   const data = res.json();
   const budgets = await data;
 

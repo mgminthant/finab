@@ -20,7 +20,7 @@ export async function GET() {
     if (budgetResult.rowCount === 0) {
       return NextResponse.json(
         { error: "No budget found for current month" },
-        { status: 404 }
+        { status: 401 }
       );
     }
 

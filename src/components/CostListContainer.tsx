@@ -3,7 +3,7 @@ import React from "react";
 import CostList from "./CostList";
 
 export default async function CostListContainer() {
-  const res = await fetch(`${process.env.BASE_API}/transactions`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/transactions`);
   const transactions: Transaction[] = await res.json();
   return (
     <>

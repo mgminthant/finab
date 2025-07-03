@@ -1,7 +1,7 @@
 import React from "react";
 
 export default async function TotalBudget() {
-  const res = await fetch(`${process.env.BASE_API}/budgets`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/budgets`);
   const budgets = await res.json();
 
   return (
