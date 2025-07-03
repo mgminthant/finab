@@ -4,18 +4,24 @@ import { useRouter } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { createBudgetHandler } from "@/lib/budget";
+import ToastDemo from "./ToastComp";
 
 export default function BudgetInput() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
-  const handleCreateBudget = (event: any) => {
+  const [openToast, setOpenToast] = React.useState(false);
+
+  const handleCreateBudget = (event: React.FormEvent<HTMLFormElement> ) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     createBudgetHandler(formData).then((data) => console.log(data));
     setOpen(false);
+    setOpenToast(true);
     router.refresh();
   };
   return (
+    <>
+    
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <button className="mb-5 inline-flex h-[35px] items-center justify-center rounded bg-slate-800 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-slate-900 focus-visible:outline-2 focus-visible:outline-violet6 select-none">
@@ -66,5 +72,11 @@ export default function BudgetInput() {
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
+    <ToastDemo
+        openToast={openToast}
+        setOpenToast={setOpenToast}
+        message={"Budget Added"}
+      />
+    </>
   );
 }

@@ -3,14 +3,19 @@ import { deleteTransactionHandler } from "@/lib/transactions";
 import { Transaction } from "@/types/transactions";
 import { formatDate } from "@/utils/date";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import ToastDemo from "./ToastComp";
 export default function TransactionPage({
   transactions,
 }: {
   transactions: Transaction[];
 }) {
   const router = useRouter();
-  const handleOnDelete = (id:number) => {
-    deleteTransactionHandler(id).then((data) => {
+  const [openToast, setOpenToast] = useState(false);
+
+  const handleOnDelete = (id: number) => {
+    deleteTransactionHandler(id).then(() => {
+      setOpenToast(true);
       router.refresh();
     });
   };
@@ -32,7 +37,7 @@ export default function TransactionPage({
               </p>
 
               <button
-                onClick={()=>handleOnDelete(cost.id)}
+                onClick={() => handleOnDelete(cost.id)}
                 className="mt-2 bg-red-500 text-white rounded-lg px-4 py-1"
               >
                 Delete
@@ -41,6 +46,11 @@ export default function TransactionPage({
           </div>
         </div>
       ))}
+      <ToastDemo
+        openToast={openToast}
+        setOpenToast={setOpenToast}
+        message={"Transaction Deleted"}
+      />
     </div>
   );
 }

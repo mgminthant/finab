@@ -23,8 +23,8 @@ export async function GET() {
       total_spent: totalSpent,
       current_budget: currentBudget,
     });
-  } catch (error) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+  } catch (e) {
+    return NextResponse.json({ error: 'Server error'+e}, { status: 500 });
   }
 }
 

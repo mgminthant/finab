@@ -4,113 +4,125 @@ import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { createTransactionHandler } from "@/lib/transactions";
+import ToastDemo from "./ToastComp";
 
 function TransactionInput() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
-  const handleCreateTransaction = (event: any) => {
+  const [openToast, setOpenToast] = React.useState(false);
+
+  const handleCreateTransaction = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = createTransactionHandler(formData);
-    data.then((data) => {
+    data.then(() => {
       setOpen(false);
+      setOpenToast(true);
       router.refresh();
     });
   };
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger asChild>
-        <button
-          onClick={() => setOpen(true)}
-          className="mb-5 inline-flex h-[35px] items-center justify-center rounded bg-slate-800 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-slate-900 focus-visible:outline-2 focus-visible:outline-violet6 select-none"
-        >
-          Add Transaction
-        </button>
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-gray1 p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
-          <Dialog.Title className="m-0 text-[17px] font-medium text-mauve12">
-            Save Transaction
-          </Dialog.Title>
-          <Dialog.Description className="mb-5 mt-2.5 text-[15px] leading-normal text-mauve11">
-            Add a new transaction to your account. Click save when you&apos;re
-            done.
-          </Dialog.Description>
-          <form onSubmit={handleCreateTransaction}>
-            <fieldset className="mb-[15px] flex items-center gap-5">
-              <label
-                className="w-[90px] text-right text-[15px] text-black"
-                htmlFor="Transaction Title"
-              >
-                Title
-              </label>
-              <input
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
-                id="transaction_title"
-                name="title"
-              />
-            </fieldset>
-            <fieldset className="mb-[15px] flex items-center gap-5">
-              <label
-                className="w-[90px] text-right text-[15px] text-black"
-                htmlFor="Price"
-              >
-                Price
-              </label>
-              <input
-                type="number"
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
-                id="price"
-                name="price"
-              />
-            </fieldset>
-            <fieldset className="mb-[15px] flex items-center gap-5">
-              <label
-                className="w-[90px] text-right text-[15px] text-black"
-                htmlFor="Description"
-              >
-                Description
-              </label>
-              <input
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
-                id="description"
-                name="description"
-              />
-            </fieldset>
-            <fieldset className="mb-[15px] flex items-center gap-5">
-              <label
-                className="w-[90px] text-right text-[15px] text-black"
-                htmlFor="Category"
-              >
-                Category
-              </label>
-              <input
-                className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
-                id="category"
-                name="category"
-              />
-            </fieldset>
-            <div className="mt-[25px] flex justify-end">
-              <button
-                type="submit"
-                className="inline-flex h-[35px] items-center justify-center rounded bg-green-500 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-green6 select-none"
-              >
-                Add
-              </button>
-            </div>
-            <Dialog.Close asChild>
-              <button
-                className="absolute right-2.5 top-2.5 inline-flex size-[25px] appearance-none items-center justify-center rounded-full text-black bg-gray3 hover:bg-violet4 focus:shadow-[0_0_0_2px] focus:shadow-slate-950 focus:outline-none"
-                aria-label="Close"
-              >
-                <Cross2Icon />
-              </button>
-            </Dialog.Close>
-          </form>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+    <>
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Trigger asChild>
+          <button
+            onClick={() => setOpen(true)}
+            className="mb-5 inline-flex h-[35px] items-center justify-center rounded bg-slate-800 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-slate-900 focus-visible:outline-2 focus-visible:outline-violet6 select-none"
+          >
+            Add Transaction
+          </button>
+        </Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
+          <Dialog.Content className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-gray1 p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
+            <Dialog.Title className="m-0 text-[17px] font-medium text-mauve12">
+              Save Transaction
+            </Dialog.Title>
+            <Dialog.Description className="mb-5 mt-2.5 text-[15px] leading-normal text-mauve11">
+              Add a new transaction to your account. Click save when you&apos;re
+              done.
+            </Dialog.Description>
+            <form onSubmit={handleCreateTransaction}>
+              <fieldset className="mb-[15px] flex items-center gap-5">
+                <label
+                  className="w-[90px] text-right text-[15px] text-black"
+                  htmlFor="Transaction Title"
+                >
+                  Title
+                </label>
+                <input
+                  className="inline-flex h-[60px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+                  id="transaction_title"
+                  name="title"
+                />
+              </fieldset>
+              <fieldset className="mb-[15px] flex items-center gap-5">
+                <label
+                  className="w-[90px] text-right text-[15px] text-black"
+                  htmlFor="Price"
+                >
+                  Price
+                </label>
+                <input
+                  type="number"
+                  className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+                  id="price"
+                  name="price"
+                />
+              </fieldset>
+              <fieldset className="mb-[15px] flex items-center gap-5">
+                <label
+                  className="w-[90px] text-right text-[15px] text-black"
+                  htmlFor="Description"
+                >
+                  Description
+                </label>
+                <textarea
+                  className="flex-1 w-full inline-flex resize-none appearance-none items-center justify-center rounded h-[70px] p-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none selection:bg-blackA6 selection:text-white hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
+                  required
+                  id="description"
+                  name="description"
+                />
+              </fieldset>
+              <fieldset className="mb-[15px] flex items-center gap-5">
+                <label
+                  className="w-[90px] text-right text-[15px] text-black"
+                  htmlFor="Category"
+                >
+                  Category
+                </label>
+                <input
+                  className="inline-flex h-[35px] w-full flex-1 items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-slate-950 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+                  id="category"
+                  name="category"
+                />
+              </fieldset>
+              <div className="mt-[25px] flex justify-end">
+                <button
+                  type="submit"
+                  className="inline-flex h-[35px] items-center justify-center rounded bg-slate-600 px-[15px] font-medium leading-none text-white outline-none outline-offset-1 hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-green6 select-none"
+                >
+                  Add
+                </button>
+              </div>
+              <Dialog.Close asChild>
+                <button
+                  className="absolute right-2.5 top-2.5 inline-flex size-[25px] appearance-none items-center justify-center rounded-full text-black bg-gray3 hover:bg-violet4 focus:shadow-[0_0_0_2px] focus:shadow-slate-950 focus:outline-none"
+                  aria-label="Close"
+                >
+                  <Cross2Icon />
+                </button>
+              </Dialog.Close>
+            </form>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+      <ToastDemo
+        openToast={openToast}
+        setOpenToast={setOpenToast}
+        message={"Transaction Added"}
+      />
+    </>
   );
 }
 
