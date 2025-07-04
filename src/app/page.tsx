@@ -1,7 +1,8 @@
+import Link from "next/link";
 import DailyBudget from "@/components/DailyBudget";
 import TotalBudget from "@/components/TotalBudget";
 import TransactionInput from "@/components/TransactionInput";
-import Link from "next/link";
+import "@radix-ui/themes/styles.css";
 
 export default async function HomePage() {
   return (

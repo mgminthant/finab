@@ -1,48 +1,43 @@
 import { NextResponse } from "next/server";
-import pool from "../../../lib/db";
+import { createMonthlyBudget, getBudgets } from "@/lib/budget";
 
 export async function GET() {
   try {
-    const budgetResult = await pool.query(
-      'SELECT total_budget FROM budgets LIMIT 1'
-    );
-    if (budgetResult.rowCount === 0) {
-      return NextResponse.json({ error: 'No budget found' }, { status: 401 });
+    const budgets = await getBudgets();
+
+    if (budgets) {
+      return NextResponse.json({
+        ...budgets,
+      });
     }
-    const totalBudget = Number(budgetResult.rows[0].total_budget);
-
-    const sumResult = await pool.query(
-      'SELECT COALESCE(SUM(price), 0) AS total_spent FROM transactions'
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Server error" + error },
+      { status: 500 }
     );
-    const totalSpent = Number(sumResult.rows[0].total_spent);
-
-    const currentBudget = totalBudget - totalSpent;
-
-    return NextResponse.json({
-      total_budget: totalBudget,
-      total_spent: totalSpent,
-      current_budget: currentBudget,
-    });
-  } catch (e) {
-    return NextResponse.json({ error: 'Server error'+e}, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
-  const formData = await request.formData();
-  const budgets = formData.get("budget");
+  try {
+    const formData = await request.formData();
 
-  await pool.query("INSERT INTO budgets (total_budget) VALUES ($1)", [budgets]);
-
-  return NextResponse.json({ message: `Budget Added`, status: 201 });
+    await createMonthlyBudget(formData);
+    return NextResponse.json({ message: `Budget Added`, status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Server error" + error },
+      { status: 500 }
+    );
+  }
 }
 
-export async function DELETE(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
-  await pool.query("DELETE FROM budgets WHERE id = $1", [id]);
-  return NextResponse.json({
-    message: `Deleted budget ${id}`,
-    status: 203,
-  });
-}
+// export async function DELETE(request: Request) {
+//   const { searchParams } = new URL(request.url);
+//   const id = searchParams.get("id");
+//   await pool.query("DELETE FROM budgets WHERE id = $1", [id]);
+//   return NextResponse.json({
+//     message: `Deleted budget ${id}`,
+//     status: 203,
+//   });
+// }

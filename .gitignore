@@ -9,6 +9,13 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+/src/app/components/AddTransactionDialog.tsx
+/src/app/components/FinicialMetrics.tsx
+/src/app/components/hi.txt
+/src/app/components/LayoutWrapper.tsx
+/src/app/components/TransactionList.tsx
+
+
 
 # testing
 /coverage

@@ -1,5 +1,5 @@
 "use client";
-import { deleteTransactionHandler } from "@/lib/transactions";
+import { deleteTransactionHandler } from "@/lib/transactionsHandler";
 import { Transaction } from "@/types/transactions";
 import { formatDate } from "@/utils/date";
 import { useRouter } from "next/navigation";

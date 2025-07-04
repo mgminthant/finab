@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { createBudgetHandler } from "@/lib/budget";
+import { createBudgetHandler } from "@/lib/budgetHandler";
 import ToastDemo from "./ToastComp";
 
 export default function BudgetInput() {

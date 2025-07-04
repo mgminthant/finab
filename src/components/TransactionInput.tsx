@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { createTransactionHandler } from "@/lib/transactions";
+import { createTransactionHandler } from "@/lib/transactionsHandler";
 import ToastDemo from "./ToastComp";
 
 function TransactionInput() {
