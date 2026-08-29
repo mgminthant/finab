@@ -58,3 +58,9 @@ next-env.d.ts
 /probe_ssl.mjs
 /.agents/
 /.windsurf/
+
+# internal / not for public repo
+PRD.md
+TASKS.md
+/.claude/
+/.github/
