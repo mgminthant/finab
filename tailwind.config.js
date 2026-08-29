@@ -2,7 +2,12 @@ const { violet, blackA, mauve, green, gray } = require("@radix-ui/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ["./src/app/**/*.tsx", "./src/components/**/*.tsx"],
+	darkMode: "class",
+	content: [
+		"./src/app/**/*.tsx",
+		"./src/components/**/*.tsx",
+		"./src/features/**/*.tsx",
+	],
 	theme: {
 		extend: {
 			colors: {
@@ -11,6 +16,25 @@ module.exports = {
 				...green,
 				...blackA,
 				...gray,
+				background: "rgb(var(--background) / <alpha-value>)",
+				foreground: "rgb(var(--foreground) / <alpha-value>)",
+				card: {
+					DEFAULT: "rgb(var(--card) / <alpha-value>)",
+					foreground: "rgb(var(--card-foreground) / <alpha-value>)",
+				},
+				border: "rgb(var(--border) / <alpha-value>)",
+				primary: {
+					DEFAULT: "rgb(var(--primary) / <alpha-value>)",
+					foreground: "rgb(var(--primary-foreground) / <alpha-value>)",
+				},
+				secondary: "rgb(var(--secondary) / <alpha-value>)",
+				muted: {
+					DEFAULT: "rgb(var(--muted) / <alpha-value>)",
+					foreground: "rgb(var(--muted-foreground) / <alpha-value>)",
+				},
+				success: "rgb(var(--success) / <alpha-value>)",
+				destructive: "rgb(var(--destructive) / <alpha-value>)",
+				warning: "rgb(var(--warning) / <alpha-value>)",
 			},
 			keyframes: {
 				overlayShow: {

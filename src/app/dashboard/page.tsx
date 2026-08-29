@@ -1,12 +1,24 @@
-import BudgetInput from "@/components/BudgetInput";
-import CostListContainer from "@/components/CostListContainer";
+import FinancialSummary from "@/features/dashboard/components/FinancialSummary";
+import SpendingByCategory from "@/features/dashboard/components/SpendingByCategory";
+import RecentTransactions from "@/features/dashboard/components/RecentTransactions";
+import QuickActions from "@/features/dashboard/components/QuickActions";
+import BudgetOverview from "@/features/budgets/components/BudgetOverview";
+import { currentUser } from "@/lib/auth";
+import { getCategories } from "@/lib/category";
 
-export default function page() {
+export default async function DashboardPage() {
+  const user = await currentUser();
+  const categories = user ? await getCategories(user.id) : [];
+
   return (
-    <div className="min-h-screen sm:p-8 p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Dashboard</h1>
-      <BudgetInput/>
-      <CostListContainer />
+    <div className="space-y-4">
+      <FinancialSummary />
+      <BudgetOverview />
+      <div className="grid gap-4 lg:grid-cols-2">
+        <SpendingByCategory />
+        <RecentTransactions />
+      </div>
+      <QuickActions categories={categories} />
     </div>
   );
 }
